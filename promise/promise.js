@@ -187,4 +187,4 @@ class FakePromise {
   }
 }
 
-module.exports = FakePromise
+export default FakePromise

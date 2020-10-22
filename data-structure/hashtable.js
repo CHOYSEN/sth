@@ -127,7 +127,7 @@ function djb2HashCode(key) {
   return hash % 1013
 }
 
-module.exports = {
+export default {
   HashTable,
   HashTable_l,
   HashTable_x

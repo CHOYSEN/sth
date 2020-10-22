@@ -50,7 +50,7 @@ class PriorityQueue extends Queue {
   }
 }
 
-module.exports = {
+export default {
   Queue,
   PriorityQueue
 }
