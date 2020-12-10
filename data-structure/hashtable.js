@@ -22,7 +22,7 @@ class HashTable {
 }
 
 // 分离链接法：使用链表
-const LinkedList = require("./linkedlist")
+import LinkedList from "./linkedList.js"
 class HashTable_l extends HashTable {
   static Node = class {
     constructor(key, value) {
