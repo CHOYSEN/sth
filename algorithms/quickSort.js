@@ -1,3 +1,7 @@
+/*  
+  快速排序
+  选择一个基准点，假设它是数组的中位数，比它小的放左边，比它大的放右边 
+*/
 function quickSort(arr) {
   const len = arr.length
   if (len <= 1) {

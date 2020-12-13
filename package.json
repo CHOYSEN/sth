@@ -1,0 +1,12 @@
+{
+  "name": "sth",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/CHOYSEN/sth.git",
+  "author": "choysen <582511362@qq.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
