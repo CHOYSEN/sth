@@ -1,6 +1,6 @@
 // 二叉搜索树
 class Tree {
-  #root = null
+  root = null
 
   static Node = class {
     constructor(value) {
@@ -10,20 +10,16 @@ class Tree {
     }
   }
 
-  getRoot() {
-    return this.#root
-  }
-
   insert(value) {
     const node = new Tree.Node(value)
-    if (!this.#root) {
-      this.#root = node
+    if (!this.root) {
+      this.root = node
     } else {
-      this.#insertNode(node, this.#root)
+      this.#insertNode(node, this.root)
     }
   }
 
-  #insertNode = function (newNode, needle) {
+  #insertNode(newNode, needle) {
     if (newNode.value < needle.value) {
       if (!needle.left) {
         needle.left = newNode
@@ -42,25 +38,22 @@ class Tree {
   }
 
   traverse(callback) {
-    if (!this.#root) {
+    if (!this.root) {
       return
     }
 
-    this.#traverseNode(this.#root, callback)
+    this.#traverseNode(this.root, callback)
   }
 
-  #traverseNode = function (needle, callback) {
-    if (!needle) {
-      return
-    }
-
+  #traverseNode(needle, callback) {
     callback(needle.value)
-    this.#traverseNode(needle.left, callback)
-    this.#traverseNode(needle.right, callback)
+
+    needle.left && this.#traverseNode(needle.left, callback)
+    needle.right && this.#traverseNode(needle.right, callback)
   }
 
   getMin() {
-    let needle = this.#root
+    let needle = this.root
     if (!needle) {
       return null
     }
@@ -72,7 +65,7 @@ class Tree {
   }
 
   getMax() {
-    let needle = this.#root
+    let needle = this.root
     if (!needle) {
       return null
     }
@@ -83,28 +76,17 @@ class Tree {
     return needle.value
   }
 
-  #getMinNode = function (needle) {
-    if (!needle) {
-      return null
-    }
-
-    while (needle.left) {
-      needle = needle.left
-    }
-    return needle
-  }
-
   remove(value) {
-    if (!this.#root) {
+    if (!this.root) {
       return false
     }
 
     // 重新构建树
-    this.#root = this.#removeNode(this.#root, value)
+    this.root = this.#removeNode(this.root, value)
     return true
   }
 
-  #removeNode = function (needle, value) {
+  #removeNode(needle, value) {
     if (needle.value > value) {
       // 重新构建当前节点的左节点
       needle.left = this.#removeNode(needle.left, value)
@@ -132,6 +114,17 @@ class Tree {
     const minNode = this.#getMinNode(needle.right)
     needle.value = minNode.value
     needle.right = this.#removeNode(needle.right, minNode.value)
+    return needle
+  }
+
+  #getMinNode(needle) {
+    if (!needle) {
+      return null
+    }
+
+    while (needle.left) {
+      needle = needle.left
+    }
     return needle
   }
 }

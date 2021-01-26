@@ -1,25 +1,28 @@
 // 双向图：邻接表实现
 class Graph {
-  #vertexes = {}
+  #vertexesMap = new Map()
 
   add(vertex1, vertex2) {
-    this.#vertexes[vertex1] = this.#vertexes[vertex1] || new Set()
-    this.#vertexes[vertex2] = this.#vertexes[vertex2] || new Set()
+    const vertexesSet1 = this.#vertexesMap.get(vertex1) ?? new Set()
+    const vertexesSet2 = this.#vertexesMap.get(vertex2) ?? new Set()
 
-    this.#vertexes[vertex1].add(vertex2)
-    this.#vertexes[vertex2].add(vertex1)
+    vertexesSet1.add(vertex2)
+    vertexesSet2.add(vertex1)
+
+    this.#vertexesMap.set(vertex1, vertexesSet1)
+    this.#vertexesMap.set(vertex2, vertexesSet2)
   }
 
   print() {
-    for (let vertex in this.#vertexes) {
-      const routes = Array.from(this.#vertexes[vertex])
+    for (let vertex in this.#vertexesMap) {
+      const routes = Array.from(this.#vertexesMap[vertex])
       console.log(`${vertex} => ${routes}`)
     }
   }
 
   // 深度优先遍历
   dfs(start, callback) {
-    if (!this.#vertexes[start]) {
+    if (!this.#vertexesMap.has(start)) {
       return
     }
 
@@ -27,36 +30,36 @@ class Graph {
     this.#dfsVisite(start, complete, callback)
   }
 
-  #dfsVisite = function (start, complete, callback) {
-    if (complete.includes(start)) {
+  #dfsVisite(vertex, complete, callback) {
+    if (complete.includes(vertex)) {
       return
     }
 
-    complete.push(start)
-    this.#vertexes[start].forEach(v => this.#dfsVisite(v, complete, callback))
-    callback(start)
+    complete.push(vertex)
+    this.#vertexesMap.get(vertex).forEach(v => this.#dfsVisite(v, complete, callback))
+    callback(vertex)
   }
 
   // 广度优先遍历
   bfs(start, callback) {
-    if (!this.#vertexes[start]) {
+    if (!this.#vertexesMap.has(start)) {
       return
     }
 
     const complete = []
     const incomplete = [start]
 
-    while (incomplete.length > 0) {
+    while (incomplete.length) {
       const vertex = incomplete.shift()
       callback(vertex)
 
-      this.#vertexes[vertex].forEach(v => !incomplete.includes(v) && !complete.includes(v) && incomplete.push(v))
+      this.#vertexesMap.get(vertex).forEach(v => !incomplete.includes(v) && !complete.includes(v) && incomplete.push(v))
       complete.push(vertex)
     }
   }
 
   minDistance(start, end) {
-    if (!this.#vertexes[start] || !this.#vertexes[end]) {
+    if (!this.#vertexesMap.has(start) || !this.#vertexesMap.has(end)) {
       throw `Vertex ${start} or ${end} does not exist`
     }
 
@@ -70,7 +73,7 @@ class Graph {
     while (incomplete.length > 0) {
       const vertex = incomplete.shift()
 
-      const routes = Array.from(this.#vertexes[vertex])
+      const routes = Array.from(this.#vertexesMap.get(vertex))
       for (let i = 0; i < routes.length; i++) {
         const next = routes[i]
         if (incomplete.includes(next) || complete.includes(next)) {

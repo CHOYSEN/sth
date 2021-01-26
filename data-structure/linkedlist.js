@@ -1,6 +1,6 @@
 // 单向链表：一环扣一环
 class LinkedList {
-  #head = null
+  head = null
   #length = 0
 
   static Node = class {
@@ -8,10 +8,6 @@ class LinkedList {
       this.next = null
       this.content = content
     }
-  }
-
-  getHead() {
-    return this.#head
   }
 
   getLength() {
@@ -22,10 +18,10 @@ class LinkedList {
   append(content) {
     const node = new LinkedList.Node(content)
 
-    if (!this.#head) {
-      this.#head = node
+    if (!this.head) {
+      this.head = node
     } else {
-      let needle = this.#head
+      let needle = this.head
       while (needle.next) {
         needle = needle.next
       }
@@ -42,10 +38,10 @@ class LinkedList {
 
     const node = new LinkedList.Node(content)
     if (position === 0) {
-      node.next = this.#head
-      this.#head = node
+      node.next = this.head
+      this.head = node
     } else {
-      let needle = this.#head
+      let needle = this.head
       for (let i = 0; i < position - 1; i++) {
         needle = needle.next
       }
@@ -61,9 +57,9 @@ class LinkedList {
       throw "Out of place"
     }
     if (position === 0) {
-      this.#head = this.#head.next
+      this.head = this.head.next
     } else {
-      let needle = this.#head
+      let needle = this.head
       for (let i = 0; i < position - 1; i++) {
         needle = needle.next
       }
@@ -74,7 +70,7 @@ class LinkedList {
 
   // 根据内容查找位置
   indexOf(content) {
-    let needle = this.#head
+    let needle = this.head
     for (let i = 0; i < this.#length; i++) {
       if (needle.content === content) {
         return i
