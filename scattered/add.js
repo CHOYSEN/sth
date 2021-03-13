@@ -11,3 +11,5 @@ function add(...nums) {
   helper.sumOf = () => console.log(nums.reduce((total, num) => total + num))
   return helper
 }
+
+export default add

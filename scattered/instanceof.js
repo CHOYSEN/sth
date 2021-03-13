@@ -11,3 +11,5 @@ function fakeInstanceOf(object, constrctor) {
 
   return false
 }
+
+export default fakeInstanceOf

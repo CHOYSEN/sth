@@ -1,4 +1,3 @@
-// 模拟 new
 function fakeNew(Proto, ...params) {
   const obj = Object.create(Proto.prototype)
   const result = Proto.call(obj, ...params)
